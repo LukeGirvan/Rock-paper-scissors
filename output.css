@@ -21,7 +21,6 @@
 
 .title, .result {
   display: block;
-  border: 3px solid hotpink;
   justify-content: center;
   align-items: center;
   text-align: center;
