@@ -22,7 +22,23 @@
 }
 // sass index.scss output.css
 
-.title, .result{
+.title, .result, .score{
     display: block;
     text-align: center;
+}
+
+
+.title.is-winner, .result.is-winner, .score.is-winner, .options.is-winner{
+    display: none;
+}
+
+.game-over{
+    display: none;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+}
+
+.game-over.is-winner{
+    display: flex;
 }
