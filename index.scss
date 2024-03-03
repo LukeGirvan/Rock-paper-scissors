@@ -1,0 +1,31 @@
+.options{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .option-container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+   button{
+    display: inline;
+    padding: 0px;
+    font-size: 2rem;
+    margin: 1rem;
+   }
+   button:hover{
+    cursor: pointer;
+
+   }
+   
+}
+// sass index.scss output.css
+
+.title, .result{
+    display: block;
+    border: 3px solid hotpink;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
