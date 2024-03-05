@@ -58,24 +58,36 @@ function changeText(result, playerChoice, cpuChoice) {
     };
     return textBasedOnResult[result];
 }
+function selectElements(...selectors) {
+    return selectors.map(selector => document.querySelector(selector));
+}
+function removeClassFromElements(elements, className) {
+    elements.forEach(element => {
+        if (element)
+            element.classList.remove(className);
+    });
+}
+function addClassToElements(elements, className) {
+    elements.forEach(element => {
+        if (element)
+            element.classList.add(className);
+    });
+}
 function reset() {
-    location.reload();
+    const [title, options, score, scoreh1, result, resultH1, gameOver] = selectElements('.title', '.options', '.score', '.score > h1', '.result', '.result > h1', '.game-over');
+    const arr = [title, options, score, result, gameOver];
+    removeClassFromElements(arr, 'is-winner');
+    playerScore = 0;
+    cpuScore = 0;
+    resultH1.textContent = '';
+    scoreh1.textContent = `Player Score: ${playerScore}  Cpu Score: ${cpuScore}`;
 }
 function winner(winner) {
-    const title = document.querySelector('.title');
-    const options = document.querySelector('.options');
-    const score = document.querySelector('.score');
-    const result = document.querySelector('.result');
-    const winnerText = document.querySelector('.game-over-h1');
-    const gameOver = document.querySelector('.game-over');
+    const [title, options, score, result, gameOver, winnerText] = selectElements('.title', '.options', '.score', '.result', '.game-over', '.game-over-h1');
     const arr = [title, options, score, result, gameOver];
     const playerWin = winner === 'player';
     winnerText.textContent = playerWin ? `You Win Nice! 😇` : `Cpu Wins Try Again Next Time 😔`;
-    for (let i = 0; i < arr.length; ++i) {
-        let element = arr[i];
-        if (element)
-            element.classList.add('is-winner');
-    }
+    addClassToElements(arr, 'is-winner');
     const playAgain = document.querySelector('.play-again-button');
     playAgain.addEventListener('click', reset);
 }

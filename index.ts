@@ -86,39 +86,49 @@ function changeText(result:ResultType, playerChoice:string, cpuChoice:string) : 
     return textBasedOnResult[result]
 }
 
-function reset() : void{
-    location.reload();
+function selectElements(...selectors: string[]): HTMLElement[] {
+    return selectors.map(selector => document.querySelector(selector) as HTMLElement);
+}
 
+function removeClassFromElements(elements: HTMLElement[], className: string): void {
+    elements.forEach(element => {
+        if (element) element.classList.remove(className);
+    });
+}
+
+function addClassToElements(elements: HTMLElement[], className: string): void {
+    elements.forEach(element => {
+        if (element) element.classList.add(className);
+    });
 }
 
 
 
 
-function winner(winner:string){
-    const title = document.querySelector('.title')  as HTMLElement
-    const options = document.querySelector('.options')  as HTMLElement
-    const score = document.querySelector('.score')  as HTMLElement
-    const result = document.querySelector('.result')  as HTMLElement
-    const winnerText  = document.querySelector('.game-over-h1') as HTMLElement
-    const  gameOver = document.querySelector('.game-over') as HTMLElement
-    const arr = [title, options, score, result, gameOver]
-    const playerWin = winner === 'player'
-    winnerText.textContent = playerWin ? `You Win Nice! 😇` : `Cpu Wins Try Again Next Time 😔`; 
+function reset(): void {
+    const [title, options, score, scoreh1, result, resultH1, gameOver] = selectElements('.title', '.options', '.score','.score > h1' ,'.result','.result > h1', '.game-over');
+    const arr = [title, options, score, result, gameOver];
 
+    removeClassFromElements(arr, 'is-winner');
 
-
-
-    for(let i =0;i<arr.length;++i){
-        let element = arr[i]  as HTMLElement
-        if(element)element.classList.add('is-winner')
-    }
-
-
-    const playAgain = document.querySelector('.play-again-button') as HTMLElement
-    playAgain.addEventListener('click', reset)
-
-
+    playerScore = 0;
+    cpuScore = 0;
+    resultH1.textContent = '';
+    scoreh1.textContent = `Player Score: ${playerScore}  Cpu Score: ${cpuScore}`;
 }
+
+function winner(winner: string): void {
+    const [title, options, score, result, gameOver, winnerText] = selectElements('.title', '.options', '.score', '.result', '.game-over', '.game-over-h1');
+    const arr = [title, options, score, result, gameOver];
+    const playerWin = winner === 'player';
+    winnerText.textContent = playerWin ? `You Win Nice! 😇` : `Cpu Wins Try Again Next Time 😔`;
+
+    addClassToElements(arr, 'is-winner');
+
+    const playAgain = document.querySelector('.play-again-button') as HTMLElement;
+    playAgain.addEventListener('click', reset);
+}
+
 
 
 document.addEventListener('click', choice)
